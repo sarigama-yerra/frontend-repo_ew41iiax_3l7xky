@@ -1,25 +1,25 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Code, Globe, Cpu } from 'lucide-react'
+import { Cog, Shield, Rocket } from 'lucide-react'
 
 const projects = [
   {
-    title: 'Mecha Shop',
-    desc: 'Headless commerce with server‑driven UI and blazing fast search.',
-    icon: <Globe size={18} />,
-    tags: ['Next.js', 'FastAPI', 'MongoDB'],
+    title: 'RX‑FRAME UI',
+    desc: 'Component kit inspired by mobile suit cockpits. Fast, modular, battle‑tested.',
+    icon: <Cog size={18} />,
+    tags: ['React', 'Framer Motion', 'Tailwind'],
   },
   {
-    title: 'Telemetry Core',
-    desc: 'Observability stack with traces, metrics, logs and auto‑insights.',
-    icon: <Cpu size={18} />,
+    title: 'A.E.U.G. Telemetry',
+    desc: 'Unified traces/metrics/logs with auto‑anomaly detection and mission replays.',
+    icon: <Shield size={18} />,
     tags: ['OpenTelemetry', 'Grafana', 'K8s'],
   },
   {
-    title: 'Motion Lab',
-    desc: 'Micro‑interactions library with physics‑based animations.',
-    icon: <Code size={18} />,
-    tags: ['Framer Motion', 'Vite', 'NPM'],
+    title: 'MINOVSKY CLOUD',
+    desc: 'Edge‑ready cloud toolkit for low‑latency deployments and secure channels.',
+    icon: <Rocket size={18} />,
+    tags: ['FastAPI', 'Edge', 'MongoDB'],
   },
 ]
 
@@ -28,8 +28,8 @@ export default function Projects() {
     <section id="projects" className="relative py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-10 flex items-end justify-between">
-          <h2 className="text-3xl md:text-4xl font-bold text-white">Projects</h2>
-          <p className="text-sm text-slate-400">Selected builds that balance polish and pragmatism</p>
+          <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Hangar</h2>
+          <p className="text-sm text-slate-400">Deployed units and experimental frames</p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {projects.map((p, i) => (
@@ -39,7 +39,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.4 }}
               transition={{ delay: i * 0.05, duration: 0.5 }}
-              className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur hover:border-white/20 transition"
+              className="group rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur hover:border-blue-400/30 hover:bg-blue-500/5 transition"
             >
               <div className="mb-4 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-1 text-xs text-slate-300">
                 {p.icon}

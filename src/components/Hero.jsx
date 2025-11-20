@@ -17,7 +17,6 @@ export default function Hero() {
     const rect = ref.current.getBoundingClientRect()
     const x = (e.clientX - rect.left) / rect.width
     const y = (e.clientY - rect.top) / rect.height
-    // map to [-1, 1]
     mx.set(x * 2 - 1)
     my.set(y * 2 - 1)
   }
@@ -43,9 +42,12 @@ export default function Hero() {
         />
       </div>
 
-      {/* Gradient overlays for cyberpunk vibe (do not block pointer) */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-slate-950/40 via-slate-950/20 to-slate-950/80"></div>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(600px_circle_at_20%_20%,rgba(59,130,246,0.20),transparent),radial-gradient(600px_circle_at_80%_30%,rgba(217,70,239,0.15),transparent)]"></div>
+      {/* Mecha HUD overlays */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-[#05070d]/20 to-[#05070d]/80" />
+      <div className="pointer-events-none absolute inset-0 opacity-70">
+        <div className="absolute inset-0 bg-[linear-gradient(#0b1220_0,#0b1220_1px,transparent_1px),linear-gradient(90deg,#0b1220_0,#0b1220_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(600px_circle_at_20%_20%,rgba(59,130,246,0.18),transparent),radial-gradient(600px_circle_at_80%_30%,rgba(217,70,239,0.14),transparent)]" />
+      </div>
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-24 pointer-events-none">
         <motion.div
@@ -55,24 +57,30 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-2xl will-change-transform"
         >
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-blue-200/90 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 animate-pulse" /> Gundam‑themed Portfolio
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-blue-200/90 backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> SYSTEM: GUNDAM UI ONLINE
           </p>
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white">
             STUNT
             <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-fuchsia-400 bg-clip-text text-transparent">
-              Full‑Stack Developer
+              Full‑Stack Operator
             </span>
           </h1>
-          <p className="mt-6 max-w-xl text-slate-300">
-            I engineer resilient web systems with a taste for mecha aesthetics. Smooth interactions, futuristic visuals, and scalable architectures.
-          </p>
+          <div className="mt-6 grid gap-3 text-slate-300">
+            <p>Initializing mission parameters. Optimizing render pipeline. Calibrating Minovsky field…</p>
+            <div className="flex items-center gap-2 text-[11px] text-slate-400">
+              <span className="h-[1px] w-10 bg-blue-400/60" /> RX‑FRAME v1.2 • STATUS: GREEN
+            </div>
+          </div>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#projects" className="pointer-events-auto rounded-xl border border-blue-500/30 bg-blue-500/20 px-5 py-2.5 text-sm font-medium text-blue-100 hover:bg-blue-500/30 transition">View Projects</a>
-            <a href="#contact" className="pointer-events-auto rounded-xl border border-white/10 px-5 py-2.5 text-sm font-medium text-white/90 hover:bg-white/10 transition">Contact</a>
+            <a href="#projects" className="pointer-events-auto rounded-xl border border-blue-500/30 bg-blue-600/30 px-5 py-2.5 text-sm font-medium text-blue-50 hover:bg-blue-600/40 transition">Enter Hangar</a>
+            <a href="#contact" className="pointer-events-auto rounded-xl border border-white/10 px-5 py-2.5 text-sm font-medium text-white/90 hover:bg-white/10 transition">Open Comms</a>
           </div>
         </motion.div>
       </div>
+
+      {/* bottom HUD accent */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-[linear-gradient(90deg,transparent,rgba(59,130,246,0.35)_30%,rgba(217,70,239,0.35)_70%,transparent)] blur-md" />
     </section>
   )
 }
