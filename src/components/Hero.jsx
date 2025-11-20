@@ -1,6 +1,13 @@
 import React, { useRef } from 'react'
-import Spline from '@splinetool/react-spline'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
+
+/*
+  Hero section updated:
+  - Removed 3D Spline scene
+  - Added 2D "Gundam"-styled animated backdrop using CSS layers (blueprint grid, scanlines, parallax plates)
+  - Optional video overlay: set VITE_HERO_VIDEO to a .mp4/.webm for a true 2D animation loop
+  - Color scheme: black/white/grey with minimal red/blue accents
+*/
 
 export default function Hero() {
   const ref = useRef(null)
@@ -26,29 +33,50 @@ export default function Hero() {
     my.set(0)
   }
 
+  const heroVideo = import.meta.env.VITE_HERO_VIDEO // Optional external animation video URL
+
   return (
     <section
       id="home"
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative flex min-h-screen items-center overflow-hidden"
+      className="relative flex min-h-screen items-center overflow-hidden bg-slate-950"
     >
-      {/* Spline 3D background (interactive) */}
+      {/* 2D animated background */}
       <div className="absolute inset-0">
-        <Spline
-          scene="https://prod.spline.design/EF7JOSsHLk16Tlw9/scene.splinecode"
-          style={{ width: '100%', height: '100%' }}
-        />
+        {/* Optional: external 2D animation video overlay */}
+        {heroVideo ? (
+          <video
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.28]"
+            src={heroVideo}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        ) : null}
+
+        {/* Moving blueprint grid (neutral) */}
+        <div className="absolute inset-0 opacity-60 [background-image:linear-gradient(#0b0f19_1px,transparent_1px),linear-gradient(90deg,#0b0f19_1px,transparent_1px)] [background-size:48px_48px] animate-[gridShift_30s_linear_infinite]" />
+
+        {/* Scanlines */}
+        <div className="absolute inset-0 opacity-[0.12] [background-image:repeating-linear-gradient(0deg,rgba(255,255,255,0.08)_0_1px,transparent_1px_3px)]" />
+
+        {/* Parallax plates (grey with tiny red/blue glow) */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -left-20 top-24 h-80 w-80 rounded-full bg-gradient-to-br from-red-500/10 via-transparent to-transparent blur-3xl" />
+          <div className="absolute -right-24 top-44 h-96 w-96 rounded-full bg-gradient-to-tr from-sky-500/10 via-transparent to-transparent blur-3xl" />
+          <div className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/5" />
+          <div className="absolute left-[10%] top-[20%] h-28 w-28 rotate-6 rounded-md border border-white/10 bg-white/[0.03] backdrop-blur-sm" />
+          <div className="absolute right-[12%] top-[30%] h-20 w-40 -rotate-3 rounded-md border border-white/10 bg-white/[0.03] backdrop-blur-sm" />
+        </div>
+
+        {/* vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-950/90 via-slate-950/30 to-slate-950" />
       </div>
 
-      {/* Mecha HUD overlays */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#05070d]/60 via-[#05070d]/20 to-[#05070d]/80" />
-      <div className="pointer-events-none absolute inset-0 opacity-70">
-        <div className="absolute inset-0 bg-[linear-gradient(#0b1220_0,#0b1220_1px,transparent_1px),linear-gradient(90deg,#0b1220_0,#0b1220_1px,transparent_1px)] bg-[size:40px_40px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(600px_circle_at_20%_20%,rgba(59,130,246,0.18),transparent),radial-gradient(600px_circle_at_80%_30%,rgba(217,70,239,0.14),transparent)]" />
-      </div>
-
+      {/* Content */}
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 pb-24 pointer-events-none">
         <motion.div
           style={{ rotateX, rotateY, x: translateX, y: translateY, transformStyle: 'preserve-3d' }}
@@ -57,30 +85,38 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-2xl will-change-transform"
         >
-          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-blue-200/90 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" /> SYSTEM: GUNDAM UI ONLINE
+          <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] px-3 py-1 text-[11px] text-slate-200 backdrop-blur">
+            <span className="h-1.5 w-1.5 rounded-full bg-red-400 animate-pulse" /> SYSTEM: GUNDAM UI ONLINE
           </p>
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-white">
             STUNT
-            <span className="block bg-gradient-to-r from-blue-400 via-cyan-300 to-fuchsia-400 bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
               Full‑Stack Operator
             </span>
           </h1>
           <div className="mt-6 grid gap-3 text-slate-300">
-            <p>Initializing mission parameters. Optimizing render pipeline. Calibrating Minovsky field…</p>
+            <p>Initializing mission parameters. Minovsky field nominal. Panels locked.</p>
             <div className="flex items-center gap-2 text-[11px] text-slate-400">
-              <span className="h-[1px] w-10 bg-blue-400/60" /> RX‑FRAME v1.2 • STATUS: GREEN
+              <span className="h-[1px] w-10 bg-slate-400/60" /> RX‑FRAME v1.2 • STATUS: <span className="text-green-300">GREEN</span>
             </div>
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href="#projects" className="pointer-events-auto rounded-xl border border-blue-500/30 bg-blue-600/30 px-5 py-2.5 text-sm font-medium text-blue-50 hover:bg-blue-600/40 transition">Enter Hangar</a>
-            <a href="#contact" className="pointer-events-auto rounded-xl border border-white/10 px-5 py-2.5 text-sm font-medium text-white/90 hover:bg-white/10 transition">Open Comms</a>
+            <a href="#projects" className="pointer-events-auto rounded-xl border border-white/15 bg-white/[0.04] px-5 py-2.5 text-sm font-medium text-slate-100 hover:bg-white/[0.07] transition">
+              Enter Hangar
+            </a>
+            <a href="#contact" className="pointer-events-auto rounded-xl border border-red-500/30 px-5 py-2.5 text-sm font-medium text-white/90 hover:bg-red-500/10 transition">
+              Open Comms
+            </a>
           </div>
         </motion.div>
       </div>
 
-      {/* bottom HUD accent */}
-      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-[linear-gradient(90deg,transparent,rgba(59,130,246,0.35)_30%,rgba(217,70,239,0.35)_70%,transparent)] blur-md" />
+      {/* bottom accent */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-[linear-gradient(90deg,transparent,rgba(239,68,68,0.35)_30%,rgba(59,130,246,0.28)_70%,transparent)] blur-md" />
+
+      <style>{`
+        @keyframes gridShift { to { background-position: 1200px 1200px; } }
+      `}</style>
     </section>
   )
 }
